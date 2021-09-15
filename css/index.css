@@ -1,6 +1,7 @@
 body {
   background-color: whitesmoke;
   padding: 0;
+  width: 1980px;
 }
 .header {
   height: 100px;
@@ -53,7 +54,7 @@ body {
 .outer {
   width: 540px;
   height: 265px;
-  margin-left: 20%;
+  margin-left: 400px;
   background-color: white;
   position: absolute;
   overflow: hidden;
@@ -175,7 +176,7 @@ body {
   height: 290px;
   width: 560px;
   background-color: white;
-  right: 20%;
+  margin-left: 1000px;
   position: absolute;
 }
 .box1 {
@@ -255,7 +256,7 @@ body {
   height: 380px;
   width: 560px;
   background-color: rgb(255, 255, 255);
-  margin-right: 20%;
+  margin-right: 22%;
   margin-top: 20px;
   float: right;
 }
