@@ -105,128 +105,120 @@ window.onload = function () {
   }
 
   var myChart = echarts.init(document.querySelector(".boxT"));
-  // 指定配置项和数据
-  var option = {
-    title: {
-      text: "曲线图数据展示",
-      left: "center",
-      align: "right",
-      top: "30px",
-    },
-    xAxis: {
-      data: [
-        "08/17",
-        "08/18",
-        "08/19",
-        "08/20",
-        "08/21",
-        "08/22",
-        "08/23",
-        "08/24",
-        "08/25",
-        "08/26",
-        "08/27",
-        "08/28",
-        "08/29",
-        "08/30",
-        "08/31",
-        "09/01",
-        "09/02",
-        "09/03",
-        "09/04",
-        "09/05",
-        "09/06",
-        "09/07",
-        "09/08",
-        "09/09",
-        "09/10",
-        "09/11",
-        "09/12",
-        "09/13",
-        "09/14",
-        "09/15",
-      ],
-    },
-    yAxis: {
-      type: "value",
-    },
-    series: [
-      {
-        data: [
-          8554, 8325, 1457, 8854, 2977, 6123, 4709, 8376, 8759, 1839, 9337,
-          7960, 4758, 7607, 5149, 4402, 7273, 3057, 6696, 4681, 1888, 7604,
-          6135, 901, 1724, 553, 8294, 3275, 2996, 9243,
-        ],
-        type: "line",
-        smooth: true,
-      },
-    ],
-  };
-  //将配置项设置给echarts实例对象，使用刚指定的配置项和数据显示图表。
-  myChart.setOption(option);
-
-  var myChartL = echarts.init(document.querySelector(".boxl"));
-
-  var option = {
-    title: {
-      text: "饼状图数据展示",
-      left: "center",
-    },
-
-    legend: {
-      orient: "vertical",
-      left: "left",
-    },
-    series: [
-      {
-        name: "周数据",
-        type: "pie",
-        radius: "50%",
-        data: [
-          { value: 4468, name: "Mon" },
-          { value: 7734, name: "Tue" },
-          { value: 7456, name: "Wed" },
-          { value: 4814, name: "Thu" },
-          { value: 1461, name: "Fri" },
-          { value: 4854, name: "Sat" },
-          { value: 2980, name: "Sun" },
-        ],
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: "rgba(0, 0, 0, 0.5)",
-          },
-        },
-      },
-    ],
-  };
-  myChartL.setOption(option);
-
   var myChartR = echarts.init(document.querySelector(".boxr"));
 
-  var option = {
-    title: {
-      text: "柱状图数据展示",
-      left: "center",
-    },
-    xAxis: {
-      type: "category",
-      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    },
-    yAxis: {
-      type: "value",
-    },
-    series: [
-      {
-        data: [9136, 3484, 4758, 379, 368, 340, 2021],
-        type: "bar",
-        showBackground: true,
-        backgroundStyle: {
-          color: "rgba(180, 180, 180, 0.2)",
+  //发送请求
+  const xhr = new XMLHttpRequest();
+  //设置响应体数据的类型
+  xhr.responseType = "json";
+  //初始化
+  xhr.open("GET", "https://edu.telking.com/api/?type=month");
+  //发送
+  xhr.send();
+  //事件绑定
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        var option = {
+          title: {
+            text: "柱状图数据展示",
+            left: "center",
+          },
+          xAxis: {
+            type: "category",
+            data: xhr.response.data.xAxis,
+          },
+          yAxis: {
+            type: "value",
+          },
+          series: [
+            {
+              data: xhr.response.data.series,
+              type: "bar",
+              showBackground: true,
+              backgroundStyle: {
+                color: "rgba(180, 180, 180, 0.2)",
+              },
+            },
+          ],
+        };
+        myChartR.setOption(option);
+      }
+
+      var option = {
+        title: {
+          text: "曲线图数据展示",
+          left: "center",
+          align: "right",
+          top: "30px",
         },
-      },
-    ],
+        xAxis: {
+          data: xhr.response.data.xAxis,
+        },
+        yAxis: {
+          type: "value",
+        },
+        series: [
+          {
+            data: xhr.response.data.series,
+            type: "line",
+            smooth: true,
+          },
+        ],
+      };
+      //将配置项设置给echarts实例对象，使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    }
   };
-  myChartR.setOption(option);
+};
+
+const xhl = new XMLHttpRequest();
+xhl.responseType = "json";
+xhl.open("GET", "https://edu.telking.com/api/?type=week");
+xhl.send();
+xhl.onreadystatechange = function () {
+  if (xhl.readyState === 4) {
+    if (xhl.status >= 200 && xhl.status < 300) {
+      var myChartL = echarts.init(document.querySelector(".boxl"));
+      console.log(xhl.response.data);
+      var data = xhl.response.data;
+      var series = data.series;
+      var xAxis = data.xAxis;
+      var option = {
+        title: {
+          text: "饼状图数据展示",
+          left: "center",
+        },
+
+        legend: {
+          orient: "vertical",
+          left: "left",
+        },
+        series: [
+          {
+            name: "周数据",
+            type: "pie",
+            radius: "50%",
+            data: [
+              { value: series[0], name: xAxis[0] },
+              { value: series[1], name: xAxis[1] },
+              { value: series[2], name: xAxis[2] },
+              { value: series[3], name: xAxis[3] },
+              { value: series[4], name: xAxis[4] },
+              { value: series[5], name: xAxis[5] },
+              { value: series[6], name: xAxis[6] },
+            ],
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)",
+              },
+            },
+          },
+        ],
+      };
+      myChartL.setOption(option);
+    }
+  }
 };
