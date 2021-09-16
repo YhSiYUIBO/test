@@ -170,55 +170,55 @@ window.onload = function () {
       myChart.setOption(option);
     }
   };
-};
 
-const xhl = new XMLHttpRequest();
-xhl.responseType = "json";
-xhl.open("GET", "https://edu.telking.com/api/?type=week");
-xhl.send();
-xhl.onreadystatechange = function () {
-  if (xhl.readyState === 4) {
-    if (xhl.status >= 200 && xhl.status < 300) {
-      var myChartL = echarts.init(document.querySelector(".boxl"));
-      console.log(xhl.response.data);
-      var data = xhl.response.data;
-      var series = data.series;
-      var xAxis = data.xAxis;
-      var option = {
-        title: {
-          text: "饼状图数据展示",
-          left: "center",
-        },
+  const xhl = new XMLHttpRequest();
+  xhl.responseType = "json";
+  xhl.open("GET", "https://edu.telking.com/api/?type=week");
+  xhl.send();
+  xhl.onreadystatechange = function () {
+    if (xhl.readyState === 4) {
+      if (xhl.status >= 200 && xhl.status < 300) {
+        var myChartL = echarts.init(document.querySelector(".boxl"));
+        // console.log(xhl.response.data);
+        var data = xhl.response.data;
+        // console.log(xhl.response.data.series);
+        var ax = new Array(7);
+        console.log(data.length);
+        for (var i = 0; i < xhl.response.data.xAxis.length; i++) {
+          ax.push({
+            value: xhl.response.data.series[i],
+            name: xhl.response.data.xAxis[i],
+          });
+        }
+        console.log(ax);
+        var option = {
+          title: {
+            text: "饼状图数据展示",
+            left: "center",
+          },
 
-        legend: {
-          orient: "vertical",
-          left: "left",
-        },
-        series: [
-          {
-            name: "周数据",
-            type: "pie",
-            radius: "50%",
-            data: [
-              { value: series[0], name: xAxis[0] },
-              { value: series[1], name: xAxis[1] },
-              { value: series[2], name: xAxis[2] },
-              { value: series[3], name: xAxis[3] },
-              { value: series[4], name: xAxis[4] },
-              { value: series[5], name: xAxis[5] },
-              { value: series[6], name: xAxis[6] },
-            ],
-            emphasis: {
-              itemStyle: {
-                shadowBlur: 10,
-                shadowOffsetX: 0,
-                shadowColor: "rgba(0, 0, 0, 0.5)",
+          legend: {
+            orient: "vertical",
+            left: "left",
+          },
+          series: [
+            {
+              name: "周数据",
+              type: "pie",
+              radius: "50%",
+              data: ax,
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: "rgba(0, 0, 0, 0.5)",
+                },
               },
             },
-          },
-        ],
-      };
-      myChartL.setOption(option);
+          ],
+        };
+        myChartL.setOption(option);
+      }
     }
-  }
+  };
 };
