@@ -1,14 +1,25 @@
 body {
   background-color: whitesmoke;
   padding: 0;
-  width: 1900px;
+  width: 100%;
   position: relative;
   margin: 0 auto;
 }
+.boddy {
+  margin: 0 auto;
+  width: 1900px;
+}
+.hh1 {
+  width: 1900px;
+  margin: 0 auto;
+  position: relative;
+}
+
 .header {
   height: 100px;
+  width: 100%;
+  position: relative;
   background-color: white;
-  padding: 0 20%;
 }
 .dis::after {
   content: "";
@@ -25,8 +36,13 @@ body {
   display: block;
   clear: both;
 }
+.content {
+  margin: 0 auto;
+  width: 1900px;
+}
 .logo {
   float: left;
+  margin-left: 20%;
   margin-top: 30px;
 }
 .logo a {
@@ -41,6 +57,7 @@ body {
 }
 .header .logOut {
   float: right;
+  margin-right: 19.5%;
   margin-top: 30px;
 }
 .header .logOut a {
@@ -53,6 +70,10 @@ body {
   line-height: 40px;
 }
 
+.upp {
+  position: relative;
+}
+
 .outer {
   width: 540px;
   height: 265px;
@@ -61,6 +82,7 @@ body {
   position: absolute;
   overflow: hidden;
   border: white 10px solid;
+  float: left;
 }
 
 .img {
@@ -182,6 +204,7 @@ body {
   background-color: white;
   margin-left: 51%;
   position: absolute;
+  float: right;
 }
 .box1 {
   border: whitesmoke 1px solid;
@@ -270,6 +293,8 @@ body {
   background-color: rgb(41, 38, 38);
   margin-top: 10px;
   border-radius: 10px;
+  position: relative;
+  width: 100%;
 }
 
 .footer .logo {
@@ -284,4 +309,11 @@ body {
 .foot {
   display: inline-block;
   margin: 80px 0 0 -200px;
+}
+
+.fot {
+  position: relative;
+  margin: 0 auto;
+  margin: 0 auto;
+  width: 1900px;
 }
